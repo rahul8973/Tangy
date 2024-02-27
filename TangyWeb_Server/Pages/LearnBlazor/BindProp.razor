@@ -1,0 +1,109 @@
+﻿@page "/bindRazor/bindProp"
+@using Models.LearnBlazorModels;
+
+<PageTitle>bindprop</PageTitle>
+<h2 class="text-sucess">Individual Product</h2>
+<div class="row">
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product PlayGround</h3><hr />
+        <div>Active: <input type="checkbox" checked="@product.IsActive" @bind-value="@product.IsActive" @bind-value:event="oninput" /></div>
+        <div>Price: <input type="number" @bind-value="@product.Price" @bind-value:event="oninput" /></div>
+        <div>
+            Product Properties:
+            <select @bind="selectedproperty">
+                @foreach (var prop in product.ProdProperties)
+                {
+                    <option value="@prop.Value">@prop.Key</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product Summary</h3><hr />
+        Name : @product.Name<br />
+        Active : @product.IsActive<br />
+        Price : @product.Price<br />
+        This Product is: @product.ActiveString<br />
+        Property Value : @selectedproperty
+    </div>
+    <br/>
+    <div class="col-12 pt-4">
+        <h2 class="text-success">Product Table</h2>
+        <table class="table table-stripped">
+            <tbody>
+                @foreach (var product in Products)
+                {
+                    <tr>
+                        <td>
+                            <input type="text" @bind-value="@product.Name" @bind-value:event="oninput" />
+                        </td>
+                        <td>
+                            <input type="text" @bind-value="@product.Price" @bind-value:event="oninput" />
+                        </td>
+                        <td>
+                            <input type="checkbox" @bind-value="@product.IsActive" checked="@(product.IsActive?true:false)"/>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h2 class="text-primary">Product Summary</h2>
+    @foreach(var prod in Products)
+    {
+        <p>@prod.Name [@prod.Price] is @(prod.IsActive?"Active":"InActive")</p>
+    }
+</div>
+@code {
+
+    string selectedproperty = string.Empty;
+    Demo_Product product = new()
+    {
+        Id = 1,
+        Name = "Rose Candle",
+        IsActive = false,
+        Price = 99.99,
+        ProdProperties = new List<Models.LearnBlazorModels.Demo_ProdProperties>()
+            {
+                new() { Id = 1, Key = "Color", Value = "Black" },
+                new() { Id = 2, Key = "Flavour", Value = "Rose" },
+                new() { Id = 3, Key = "Size", Value = "20 oz" }
+            }
+    };
+
+    List<Demo_Product> Products = new();
+
+    protected override void OnInitialized()
+    {
+        Products.Add(new()
+        {
+            Id = 1,
+            Name = "MidNight Blaze",
+            IsActive = false,
+            Price = 50.67,
+            ProdProperties = new()
+                {
+                    new(){Id=1,Key="Flavour",Value="Rose"},
+                    new(){Id=2,Key="Size",Value="20oz"},
+                    new(){Id=3,Key="Color",Value="Purple"},
+                }
+        });
+
+        Products.Add(new()
+        {
+            Id = 2,
+            Name = "Lily Blossoms",
+            IsActive = true,
+            Price = 90.67,
+            ProdProperties = new()
+                {
+                    new(){Id=1,Key="Flavour",Value="Lily"},
+                    new(){Id=2,Key="Size",Value="15oz"},
+                    new(){Id=3,Key="Color",Value="White"},
+                }
+        });
+    }
+}
+

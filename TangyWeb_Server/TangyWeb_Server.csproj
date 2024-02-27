@@ -8,4 +8,17 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Pages\LearnBlazor\" />
+    <None Remove="Pages\LearnBlazorComponent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\LearnBlazor\" />
+    <Folder Include="Pages\LearnBlazorComponent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

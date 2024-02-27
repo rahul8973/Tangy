@@ -1,0 +1,73 @@
+﻿@page "/bindrazor/demoproduct"
+
+<PageTitle>demoproduct</PageTitle>
+<h2 class="text-primary">DemoProduct</h2>
+<p>Favourite : @SelectedFavouriteCount</p>
+<p>Last Selected Product : @LastSelectedProduct</p>
+
+<div class="border p-2 mt-2" style="background-color:azure">
+    <div class="row">
+        @foreach(var prod in Products)
+        {
+                <_ProductComponent Product="prod"
+                                   FavouriteUpdated="UpdateFavouriteCount"
+                                   SelectedItemUpdated="LastSelectedItemUpdated"/>
+        }
+    </div>
+</div>
+
+
+@code {
+    public int SelectedFavouriteCount { get; set; } = 0;
+    public string LastSelectedProduct { get; set; }
+    List<Demo_Product> Products = new();
+
+    protected override void OnInitialized()
+    {
+        Products.Add(new()
+        {
+            Id = 1,
+            Name = "MidNight Blaze",
+            IsActive = false,
+            Price = 50.67,
+            ProdProperties = new()
+        {
+                new(){Id=1,Key="Flavour",Value="Rose"},
+                new(){Id=2,Key="Size",Value="20oz"},
+                new(){Id=3,Key="Color",Value="Purple"},
+            }
+        });
+
+        Products.Add(new()
+        {
+            Id = 2,
+            Name = "Lily Blossoms",
+            IsActive = true,
+            Price = 90.67,
+            ProdProperties = new()
+        {
+                new(){Id=1,Key="Flavour",Value="Lily"},
+                new(){Id=2,Key="Size",Value="15oz"},
+                new(){Id=3,Key="Color",Value="White"},
+            }
+        });
+    }
+
+    public void UpdateFavouriteCount(bool IsSelected)
+    {
+        if(IsSelected)
+        {
+            SelectedFavouriteCount++;
+        }
+        else
+        {
+            SelectedFavouriteCount--;
+        }
+    }
+
+    public void LastSelectedItemUpdated(string name)
+    {
+        LastSelectedProduct = name;
+    }
+}
+
